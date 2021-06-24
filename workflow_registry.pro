@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 INCLUDEPATH += $$_PRO_FILE_PWD_/../rapidjson/include
 INCLUDEPATH += $$_PRO_FILE_PWD_/../mms_extract_rollouts
+INCLUDEPATH += $$_PRO_FILE_PWD_/../
 QMAKE_POST_LINK += $$quote(cp workflow_registry ../bin/staccato)
 
 SOURCES += \
@@ -36,10 +37,8 @@ SOURCES += \
     rollaut_wsserver_stream.cpp \
     rollaut_ws_interface.cpp \
     test_echo_websocket_server.cpp \
-    ../mms_extract_rollouts/rollaut_db_rollout_serialize_to_ceps.cpp \
     rollaut_reg_manager.cpp \
     test_state_stream_service.cpp \
-    rollaut_rollout_db_importer.cpp \
     registry_utils.cpp \
     sm_compute_core_manager.cpp \
     websocket_utils.cpp
@@ -62,5 +61,4 @@ HEADERS += \
 
 
 LIBS+= -L$$PWD/../cryptopp
-LIBS+= -lmysqlcppconn
 LIBS+=  -ldl -lpthread -lrt -lcryptopp

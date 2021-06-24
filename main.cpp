@@ -55,8 +55,6 @@ limitations under the License.
 #include "rollaut_ws_interface.h"
 #include "tests.h"
 #include "rollaut_reg_manager.h"
-#include "rollout_serialization.h"
-#include "rollaut_rollout_db_importer.h"
 #include "registry_utils.h"
 #include "sm_compute_core_manager.h"
 #include "websocket_utils.h"
@@ -764,7 +762,7 @@ void rollaut::Rollout_executer::do_execute(monitoring::Node* rollout){
                      if (attr_end_time != nullptr){
                           ((monitoring::Attribute_node<std::uint64_t>*)attr_end_time)->value = time(nullptr);
                          reg_utils::touch(attr_end_time);
-                     } else reg_utils::a("end_time_unix_time",std::uint64_t{time(nullptr)},rollout);
+                     } else reg_utils::a("end_time_unix_time",(std::uint64_t) time(nullptr),rollout);
 
                      auto attr_processing_status = rollout->get_attr("processing_status");
                      if (attr_processing_status != nullptr){
@@ -822,15 +820,6 @@ int main(int argc, char *argv[])
     std::string passwd; if (getenv("ROLLAUT_DB_PASSWD") != nullptr) passwd = getenv("ROLLAUT_DB_PASSWD");
     std::string timestamp;
     std::string database; if (getenv("ROLLAUT_DB_DB") != nullptr) database = getenv("ROLLAUT_DB_DB");
-
-    rollaut::Rollout_db_importer import_rollouts_from_db{
-        &reg,
-        hostname,
-        user,
-        passwd,
-        timestamp,
-        database};
-
     rollaut::Rollout_observe_scheduled_time_and_flip_processing_status flipper{&reg};
     if (argc > 1){
         for (std::size_t i = 1; i != argc; ++i){

@@ -57,7 +57,7 @@ void rollaut::Websocket_interface::handle_client_communication(
 {
     constexpr auto WSHANDSHAKE_STEP_1 = 1;
     std::map<int,std::pair<int,rollaut::Websocketserver_stream>> socket2state;
-    auto handle_unknown_socket = [this,&socket2state,epfd,stream_id](int sck) ->
+    auto handle_unknown_socket = [this,&socket2state,epfd,stream_id,WSHANDSHAKE_STEP_1](int sck) ->
             std::pair<int,rollaut::Websocketserver_stream>&
     {
         if (socket2state.find(sck) == socket2state.end() ){
